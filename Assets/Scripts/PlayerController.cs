@@ -16,9 +16,6 @@ public class PlayerController : MonoBehaviour
     public AudioClip crashSound;                // Reference to the crash sound effect
     private AudioSource playerAudio;            // Reference to the AudioSource component
 
-    // Reference to UI elements
-    public GameObject gameOverUI;              // Reference to the Game Over UI panel
-
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
@@ -33,7 +30,6 @@ public class PlayerController : MonoBehaviour
         isOnGround = false;  // Player is not on the ground after the initial jump
         playerAnim.SetTrigger("Jump_trig");  // Trigger jump animation at the start
         dirtParticle.Stop();  // Stop dirt particle initially
-        gameOverUI.SetActive(false);  // Hide the game over UI at the start
     }
 
     void Update()
@@ -77,26 +73,7 @@ public class PlayerController : MonoBehaviour
 
             // Play the crash sound effect
             playerAudio.PlayOneShot(crashSound, 1.0f); // Play crash sound at full volume
-
-            // Show the game over UI
-            gameOverUI.SetActive(true);
         }
     }
 
-    public void RestartGame()
-    {
-        gameOver = false; // Reset the game over state
-        gameOverUI.SetActive(false); // Hide the game over UI
-        playerAnim.SetBool("Death_b", false); // Reset the death animation
-
-        // Reload the current scene
-        Scene currentScene = SceneManager.GetActiveScene(); // Get the current scene
-        SceneManager.LoadScene(currentScene.name); // Reload the current scene
-    }
-
-    public void QuitGame()
-    {
-        Debug.Log("Quit Game"); // Log quit action (optional)
-        Application.Quit(); // Quit the application
-    }
 }
